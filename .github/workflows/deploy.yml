@@ -1,0 +1,32 @@
+name: Build, push & deploy with CDK
+on:
+  push:
+    branches: ['main']
+permissions:
+  contents: read
+  id-token: write # needed for OIDC
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: Install app dependencies
+        working-directory: app
+        run: npm ci
+
+      - name: Install infra deps & deploy
+        working-directory: infra
+        run: |
+          npm ci
+          npx cdk deploy --require-approval never

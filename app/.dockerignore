@@ -1,0 +1,35 @@
+# ---- Node + Next.js artefacts you don't want in the image ----
+node_modules
+.next
+out
+.turbo
+pnpm-lock.yaml
+
+# ---- Local dev, test, and editor clutter ----
+*.log
+coverage
+__tests__/
+*.test.*
+*.spec.*
+.vscode/
+.idea/
+.DS_Store
+
+# ---- Repo-level stuff not needed at runtime ----
+infra/                # CDK code stays on the host
+*/**/cdk.out
+.github/
+.git/
+.gitignore
+.dockerignore
+Dockerfile            # the builder only needs to *read* it
+README.md
+*.md
+
+# ---- Secrets & environment overrides (pass at runtime instead) ----
+.env*
+*.local
+
+# ---- OS / temp files ----
+*.swp
+*~
