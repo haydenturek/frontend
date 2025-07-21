@@ -4,7 +4,7 @@ import * as ec2 from 'aws-cdk-lib/aws-ec2'
 import * as ecs from 'aws-cdk-lib/aws-ecs'
 import * as elbv2 from 'aws-cdk-lib/aws-elasticloadbalancingv2'
 import * as patterns from 'aws-cdk-lib/aws-ecs-patterns'
-// import * as ssm from 'aws-cdk-lib/aws-ssm'
+import * as ssm from 'aws-cdk-lib/aws-ssm'
 import { DockerImageAsset } from 'aws-cdk-lib/aws-ecr-assets'
 import * as iam from 'aws-cdk-lib/aws-iam'
 
@@ -19,10 +19,10 @@ export class FrontendStack extends cdk.Stack {
 
     const { appName, environment } = props
 
-    // const collectionApi = ssm.StringParameter.valueFromLookup(
-    //   this,
-    //   `/${appName}/${environment}/collection-service/api-endpoint`
-    // )
+    const listenerArn = ssm.StringParameter.valueFromLookup(
+      this,
+      `/${appName}/${environment}/shared-infra/alb-https-listener-arn`
+    )
 
     // Import shared infrastructure resources
     const vpc = ec2.Vpc.fromLookup(this, 'SharedVpc', {
@@ -98,9 +98,7 @@ export class FrontendStack extends cdk.Stack {
         this,
         'HTTPSListener',
         {
-          listenerArn: cdk.Fn.importValue(
-            `${appName}-${environment}-alb-https-listener-arn`
-          ),
+          listenerArn,
           securityGroup: ec2.SecurityGroup.fromLookupByName(
             this,
             'SecurityGroup',
