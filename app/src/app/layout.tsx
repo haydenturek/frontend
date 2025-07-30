@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-[100dvh] flex`}
       >
         <LetterGlitch
           glitchColors={['#2b4539', '#61dca3', '#61b3dc']}

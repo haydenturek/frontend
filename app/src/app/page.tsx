@@ -2,10 +2,8 @@ import Input from '@/components/input'
 
 export default function Home() {
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center justify-center">
-        <Input />
-      </main>
+    <div className="min-h-[100dvh] flex flex-1 items-center justify-center px-4 mx-auto max-w-4xl">
+      <Input />
     </div>
   )
 }

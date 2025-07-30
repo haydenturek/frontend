@@ -279,8 +279,8 @@ const LetterGlitch = ({
   }, [glitchSpeed, smooth])
 
   return (
-    <div className="absolute z-[-1] w-full h-full bg-black overflow-hidden">
-      <canvas ref={canvasRef} className="absolute min-h-screen" />
+    <div className="fixed inset-0 z-[-1] bg-black min-h-[100dvh]">
+      <canvas ref={canvasRef} className="" />
       {outerVignette && (
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none bg-[radial-gradient(circle,_rgba(0,0,0,0)_60%,_rgba(0,0,0,1)_100%)]"></div>
       )}
